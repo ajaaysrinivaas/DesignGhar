@@ -45,8 +45,10 @@ const ServicePopup: NextPage = () => {
         <main>
           <h1>Service Not Found</h1>
           <p>We couldn’t find the service you’re looking for.</p>
-          <Link href="/services">
-            <button>Go Back</button>
+          <Link legacyBehavior href="/services">
+            <a>
+              <button>Go Back</button>
+            </a>
           </Link>
         </main>
         <Footer />
@@ -62,8 +64,10 @@ const ServicePopup: NextPage = () => {
           <h1>{service.title}</h1>
           <img src={service.image} alt={service.title} />
           <p>{service.details}</p>
-          <Link href="/contact" passHref>
-            <button className="contact-button">Contact Us</button>
+          <Link legacyBehavior href="/contact">
+            <a>
+              <button className="contact-button">Contact Us</button>
+            </a>
           </Link>
           <button className="close-button" onClick={() => router.push('/services')}>
             Close
@@ -71,72 +75,79 @@ const ServicePopup: NextPage = () => {
         </div>
       </main>
       <Footer />
+
       <style jsx>{`
         .popup-page {
-          background: #fff;
-          color: #4a3f35;
+          background: #1c1c1c;
+          color: #f0f0f0;
           min-height: 100vh;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          display: flex;
+          flex-direction: column;
         }
         main {
           display: flex;
           justify-content: center;
           align-items: center;
-          min-height: 80vh;
-          padding: 2rem;
+          padding: 1.5rem;
+          flex: 1;
         }
         .popup-container {
-          max-width: 600px;
-          background: #f9f9f9;
-          padding: 2rem;
+          max-width: 550px;
+          background: #2b2b2b;
+          padding: 1.5rem;
           border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
           text-align: center;
         }
         .popup-container h1 {
-          font-size: 2rem;
-          margin-bottom: 1rem;
+          font-size: 1.75rem; /* Reduced font size */
+          margin-bottom: 0.8rem;
+          color: #f0f0f0;
         }
         .popup-container img {
           width: 100%;
-          max-width: 400px;
+          max-width: 350px;
           height: auto;
           object-fit: cover;
-          margin-bottom: 1rem;
+          margin: 0.8rem auto;
           border-radius: 4px;
+          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
         }
         .popup-container p {
-          font-size: 1.1rem;
-          color: #555;
-          margin-bottom: 1.5rem;
-          line-height: 1.6;
+          font-size: 1rem; /* Reduced font size */
+          color: #ccc;
+          margin-bottom: 1rem;
+          line-height: 1.5;
         }
         .contact-button {
-          background: #4a3f35;
-          color: #fff;
+          background: #f0f0f0;
+          color: #1c1c1c;
           border: none;
-          padding: 0.75rem 1.5rem;
+          padding: 0.65rem 1.3rem;
           margin: 0.5rem;
           border-radius: 4px;
           cursor: pointer;
           transition: background 0.3s ease, transform 0.3s ease;
+          font-size: 0.95rem;
         }
         .contact-button:hover {
-          background: #3a2f2a;
+          background: #e0e0e0;
           transform: scale(1.05);
         }
         .close-button {
           background: transparent;
-          border: 1px solid #555;
-          color: #555;
-          padding: 0.75rem 1.5rem;
+          border: 1px solid #ccc;
+          color: #ccc;
+          padding: 0.65rem 1.3rem;
           margin: 0.5rem;
           border-radius: 4px;
           cursor: pointer;
           transition: background 0.3s ease, transform 0.3s ease;
+          font-size: 0.95rem;
         }
         .close-button:hover {
-          background: #eee;
+          background: #333;
           transform: scale(1.05);
         }
         @media (max-width: 768px) {

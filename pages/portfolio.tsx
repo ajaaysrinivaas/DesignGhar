@@ -28,6 +28,7 @@ const Portfolio: NextPage = () => {
           <div className="project">
             <div className="project-image">
               <img src="/project1.jpg" alt="Modern Minimalist Residence" />
+              <div className="image-overlay" />
             </div>
             <div className="project-info">
               <h3>Modern Minimalist Residence</h3>
@@ -37,6 +38,7 @@ const Portfolio: NextPage = () => {
           <div className="project">
             <div className="project-image">
               <img src="/project2.jpg" alt="Luxury Penthouse" />
+              <div className="image-overlay" />
             </div>
             <div className="project-info">
               <h3>Luxury Penthouse</h3>
@@ -46,6 +48,7 @@ const Portfolio: NextPage = () => {
           <div className="project">
             <div className="project-image">
               <img src="/project3.jpg" alt="Eco-Friendly Office" />
+              <div className="image-overlay" />
             </div>
             <div className="project-info">
               <h3>Eco-Friendly Office</h3>
@@ -55,6 +58,7 @@ const Portfolio: NextPage = () => {
           <div className="project">
             <div className="project-image">
               <img src="/project4.jpg" alt="Contemporary Café" />
+              <div className="image-overlay" />
             </div>
             <div className="project-info">
               <h3>Contemporary Café</h3>
@@ -66,8 +70,8 @@ const Portfolio: NextPage = () => {
       <Footer />
       <style jsx>{`
         .portfolio-page {
-          background: #fff;
-          color: #4a3f35;
+          background: #1c1c1c;
+          color: #f0f0f0;
           min-height: 100vh;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -78,33 +82,34 @@ const Portfolio: NextPage = () => {
           text-align: center;
         }
         h1 {
-          font-size: 2.8rem;
-          margin-bottom: 1rem;
+          font-size: 2rem; /* Reduced from 2.8rem */
+          margin-bottom: 0.8rem;
         }
         p {
-          font-size: 1.1rem;
-          margin-bottom: 2rem;
-          color: #555;
+          font-size: 1rem; /* Reduced from 1.1rem */
+          margin-bottom: 1.5rem;
+          color: #ccc;
         }
         .gallery {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 2rem;
+          gap: 1.5rem;
         }
         .project {
-          background: #f9f9f9;
+          background: linear-gradient(135deg, #2b2b2b, #242424);
           border-radius: 8px;
           overflow: hidden;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           display: flex;
           flex-direction: column;
         }
         .project:hover {
           transform: translateY(-5px);
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
         }
         .project-image {
+          position: relative;
           width: 100%;
           height: 200px;
           overflow: hidden;
@@ -118,17 +123,29 @@ const Portfolio: NextPage = () => {
         .project:hover .project-image img {
           transform: scale(1.05);
         }
+        .image-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+          pointer-events: none;
+          opacity: 0.8;
+        }
         .project-info {
-          padding: 1rem;
+          padding: 0.8rem; /* Slightly reduced padding */
           text-align: left;
+          flex: 1;
         }
         .project-info h3 {
-          font-size: 1.5rem;
-          margin-bottom: 0.5rem;
+          font-size: 1.25rem; /* Reduced from 1.5rem */
+          margin-bottom: 0.4rem;
+          color: #f0f0f0;
         }
         .project-info p {
-          font-size: 1rem;
-          color: #555;
+          font-size: 0.95rem; /* Adjusted size */
+          color: #ccc;
           line-height: 1.5;
         }
         @media (max-width: 768px) {

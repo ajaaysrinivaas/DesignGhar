@@ -6,7 +6,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const About: NextPage = () => {
-  // Collect references for GSAP animations for each section
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   const addToRefs = (el: HTMLDivElement) => {
     if (el && !sectionsRef.current.includes(el)) {
@@ -17,9 +16,9 @@ const About: NextPage = () => {
   useEffect(() => {
     gsap.from(sectionsRef.current, {
       opacity: 0,
-      y: 30,
-      duration: 1,
-      stagger: 0.3,
+      y: 20,
+      duration: 0.8,
+      stagger: 0.2,
       ease: 'power2.out',
     });
   }, []);
@@ -33,7 +32,7 @@ const About: NextPage = () => {
           <div className="content">
             <h1>About Design Ghar</h1>
             <p>
-              At Design Ghar, interior design is not a chore - it’s a heartfelt extension of who you are.
+              At Design Ghar, interior design is a heartfelt extension of who you are.
               We celebrate the uniqueness of every home with a desi, homely touch that transforms spaces
               into soulful reflections of personality.
             </p>
@@ -46,8 +45,7 @@ const About: NextPage = () => {
             <h2>Our Vision</h2>
             <p>
               We strive to create interiors that are inviting, warm, and authentically you. Every design we craft
-              is meant to enhance the beauty of your personal space with light gradients, soft hues, and a splash
-              of personality.
+              enhances the beauty of your personal space with soft hues and a splash of personality.
             </p>
           </div>
           <div className="image">
@@ -61,8 +59,7 @@ const About: NextPage = () => {
             <h2>Our Story</h2>
             <p>
               Born from a passion for home and heritage, Design Ghar blends traditional desi aesthetics with modern
-              design principles. Our journey is one of innovation, warmth, and a desire to make every home feel
-              uniquely personal.
+              design principles. Our journey is one of innovation, warmth, and a desire to make every home feel unique.
             </p>
           </div>
           <div className="image">
@@ -75,9 +72,8 @@ const About: NextPage = () => {
           <div className="content">
             <h2>The Founder</h2>
             <p>
-              Our founder, PA , believes that every home is a canvas for self-expression. With a refined eye for
-              detail and a deep respect for cultural roots, PA has transformed countless spaces into warm,
-              inviting havens that resonate with personality.
+              Our founder, PA, believes every home is a canvas for self-expression. With a refined eye for detail and
+              a deep respect for cultural roots, PA has transformed spaces into warm, inviting havens.
             </p>
           </div>
           <div className="image">
@@ -90,9 +86,8 @@ const About: NextPage = () => {
           <div className="content">
             <h2>Our Philosophy</h2>
             <p>
-              At Design Ghar, we believe that a well-designed space nurtures the soul. Our philosophy is simple:
-              merge functionality with art, tradition with modernity, and aesthetics with comfort to create homes
-              that truly speak to the heart.
+              We believe a well-designed space nurtures the soul. Our philosophy is simple: merge functionality with art,
+              tradition with modernity, and aesthetics with comfort to create homes that truly speak to the heart.
             </p>
           </div>
           <div className="image">
@@ -104,25 +99,28 @@ const About: NextPage = () => {
 
       <style jsx>{`
         .about-page {
-          background: #fff;
-          color: #4a3f35;
+          background: #1c1c1c;
+          color: #f0f0f0;
           min-height: 100vh;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          padding-bottom: 1rem;
         }
         main {
-          max-width: 1200px;
-          margin: 2rem auto;
+          max-width: 1000px;
+          margin: 1.5rem auto;
           padding: 0 1rem;
         }
         .section {
           display: flex;
           align-items: center;
-          padding: 1.5rem 1rem;
-          border-bottom: 1px solid #eee;
-          transition: transform 0.3s ease;
+          padding: 1.2rem 1rem;
+          border-bottom: 1px solid #333;
+          margin-bottom: 1.5rem;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .section:hover {
-          transform: translateY(-3px);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
         }
         .section:last-child {
           border-bottom: none;
@@ -130,21 +128,23 @@ const About: NextPage = () => {
         .content {
           flex: 1;
           padding: 1rem;
-        }
-        .content h1,
-        .content h2 {
-          margin-bottom: 0.5rem;
+          background: rgba(40, 40, 40, 0.95);
+          border-radius: 6px;
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+          font-size: 0.95rem;
         }
         .content h1 {
-          font-size: 2.8rem;
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
         }
         .content h2 {
-          font-size: 2rem;
+          font-size: 1.5rem;
+          margin-bottom: 0.5rem;
         }
         .content p {
-          font-size: 1.1rem;
-          line-height: 1.6;
-          color: #555;
+          font-size: 1rem;
+          line-height: 1.5;
+          color: #ccc;
         }
         .image {
           flex: 1;
@@ -154,11 +154,15 @@ const About: NextPage = () => {
         }
         .section-image {
           width: 90%;
-          max-width: 400px;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          max-width: 350px;
+          border-radius: 6px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+          transition: transform 0.3s ease;
         }
-        /* Alternating layout based on class */
+        .section-image:hover {
+          transform: scale(1.03);
+        }
+        /* Alternating layout */
         .image-right .content {
           order: 1;
         }
@@ -171,7 +175,7 @@ const About: NextPage = () => {
         .image-left .image {
           order: 1;
         }
-        /* Centered layout for sections without images */
+        /* Centered layout */
         .centered {
           justify-content: center;
           text-align: center;

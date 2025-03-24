@@ -2,7 +2,7 @@
 import type { NextPage } from 'next';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 
 function ContactForm() {
@@ -36,6 +36,75 @@ function ContactForm() {
   );
 }
 
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+const faqData: FAQItem[] = [
+  {
+    question: 'How long does a project take?',
+    answer: 'Depending on the scope, projects can take anywhere from a few weeks to several months.',
+  },
+  {
+    question: 'What is your design process?',
+    answer: 'My process starts with an in-depth consultation, followed by design planning, execution, and final touches.',
+  },
+  {
+    question: 'Do you offer customized solutions?',
+    answer: 'Absolutely. Every project is tailored to reflect the client’s unique style and needs.',
+  },
+];
+
+const FAQ: React.FC = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  return (
+    <div className="faqs">
+      <h2>Frequently Asked Questions</h2>
+      {faqData.map((item, index) => (
+        <div key={index} className="faq">
+          <h3 onClick={() => toggleFAQ(index)}>{item.question}</h3>
+          {openIndex === index && <p>{item.answer}</p>}
+        </div>
+      ))}
+      <style jsx>{`
+        .faqs {
+          margin-top: 2rem;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .faq {
+          margin-bottom: 1rem;
+          padding: 0.75rem 1rem;
+          background: #2b2b2b;
+          border-radius: 4px;
+          border: 1px solid #333;
+          cursor: pointer;
+          transition: background 0.3s ease;
+        }
+        .faq:hover {
+          background: #333;
+        }
+        .faq h3 {
+          margin: 0;
+          font-size: 1.1rem;
+          color: #f0f0f0;
+        }
+        .faq p {
+          margin: 0.5rem 0 0;
+          font-size: 1rem;
+          color: #ccc;
+        }
+      `}</style>
+    </div>
+  );
+};
+
 const Contact: NextPage = () => {
   return (
     <div className="contact-page">
@@ -53,7 +122,7 @@ const Contact: NextPage = () => {
           <div className="contact-info">
             <h2>Visit Us</h2>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0196876153436!2d-122.41941508468128!3d37.77492927975959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c5a9b1b7d%3A0x5c8c69c9a9b1d8b0!2sSan%20Francisco!5e0!3m2!1sen!2sus!4v1617221051234!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.9657150785864!2d78.4044513152468!3d17.38504418833866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcdd8b49ad6b8b1%3A0x91f6b2d46e7ec56f!2sHyderabad%2C%20Telangana%2C%20India!5e0!3m2!1sen!2sus!4v1690590812374!5m2!1sen!2sus"
               width="100%"
               height="200"
               style={{ border: 0 }}
@@ -75,52 +144,33 @@ const Contact: NextPage = () => {
             </div>
           </div>
         </div>
-        <section className="faqs">
-          <h2>Frequently Asked Questions</h2>
-          <div className="faq">
-            <h3>How long does a project take?</h3>
-            <p>
-              Depending on the scope, projects can take anywhere from a few weeks to several months.
-            </p>
-          </div>
-          <div className="faq">
-            <h3>What is your design process?</h3>
-            <p>
-              My process starts with an in-depth consultation, followed by design planning, execution, and final touches.
-            </p>
-          </div>
-          <div className="faq">
-            <h3>Do you offer customized solutions?</h3>
-            <p>
-              Absolutely. Every project is tailored to reflect the client’s unique style and needs.
-            </p>
-          </div>
-        </section>
+        <FAQ />
       </main>
       <Footer />
 
       <style jsx>{`
         .contact-page {
-          background: #fff;
-          color: #4a3f35;
+          background: #1c1c1c;
+          color: #f0f0f0;
           min-height: 100vh;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          padding-bottom: 1rem;
         }
         main {
           padding: 2rem;
           max-width: 1200px;
           margin: 0 auto;
+          text-align: center;
         }
         h1 {
-          text-align: center;
-          font-size: 2.8rem;
+          font-size: 2rem;
           margin-bottom: 1rem;
+          color: #f0f0f0;
         }
         p {
-          text-align: center;
-          font-size: 1.1rem;
-          margin-bottom: 2rem;
-          color: #555;
+          font-size: 1rem;
+          margin-bottom: 1.5rem;
+          color: #ccc;
         }
         .contact-container {
           display: flex;
@@ -130,10 +180,10 @@ const Contact: NextPage = () => {
         }
         .contact-form,
         .contact-info {
-          background: #f9f9f9;
+          background: #2b2b2b;
           padding: 1.5rem;
           border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
         /* Form Styles */
         form {
@@ -149,47 +199,43 @@ const Contact: NextPage = () => {
         label {
           font-weight: 600;
           margin-bottom: 0.25rem;
+          color: #f0f0f0;
+          font-size: 0.95rem;
         }
         input,
         textarea {
           padding: 0.75rem;
-          border: 1px solid #ccc;
+          border: 1px solid #555;
           border-radius: 4px;
           font-size: 1rem;
+          background: #333;
+          color: #f0f0f0;
         }
         button {
           padding: 0.75rem;
           border: none;
-          background: #4a3f35;
-          color: #fff;
+          background: #f0f0f0;
+          color: #1c1c1c;
           border-radius: 4px;
           cursor: pointer;
           transition: background 0.3s ease, transform 0.3s ease;
           align-self: flex-start;
+          font-size: 1rem;
         }
         button:hover {
-          background: #3a2f2a;
+          background: #e0e0e0;
           transform: scale(1.05);
         }
         .success-message {
           font-size: 1.2rem;
-          color: #4a3f35;
+          color: #f0f0f0;
           text-align: center;
         }
         .social a {
           margin-right: 1rem;
           text-decoration: none;
-          color: #4a3f35;
-        }
-        .faqs {
-          margin-top: 2rem;
-        }
-        .faq {
-          margin-bottom: 1.5rem;
-          text-align: left;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
+          color: #f0f0f0;
+          font-size: 1rem;
         }
         @media (max-width: 768px) {
           .contact-container {

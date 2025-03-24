@@ -11,7 +11,7 @@ const Services: NextPage = () => {
   useEffect(() => {
     gsap.from('.service-card', {
       opacity: 0,
-      duration: 1,
+      duration: 0.8,
       y: 20,
       stagger: 0.2,
       ease: 'power2.out',
@@ -48,51 +48,47 @@ const Services: NextPage = () => {
 
       <style jsx>{`
         .services-page {
-          background: #fff;
-          color: #4a3f35;
+          background: #1c1c1c;
+          color: #f0f0f0;
           min-height: 100vh;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         main {
           max-width: 1200px;
-          margin: 2rem auto;
+          margin: 1.5rem auto;
           padding: 0 1rem;
           text-align: center;
         }
         h1 {
-          font-size: 2.8rem;
-          margin-bottom: 1rem;
+          font-size: 2rem; /* Reduced from 2.8rem */
+          margin-bottom: 0.8rem;
+          color: #f0f0f0;
         }
         p {
-          font-size: 1.1rem;
-          margin-bottom: 2rem;
-          color: #555;
+          font-size: 1rem; /* Reduced from 1.1rem */
+          margin-bottom: 1.5rem;
+          color: #ccc;
         }
         .services-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 2rem;
+          gap: 1.5rem;
           padding: 0 1rem;
         }
-
-        /* 
-          Force remove underline and color to black. 
-          Using !important ensures it overrides any global or default styles.
-        */
         .service-card {
-          background: #fff;
+          background: #2b2b2b;
           border-radius: 8px;
           overflow: hidden;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           cursor: pointer;
-          text-decoration: none !important; /* no underline */
-          color: #000 !important;          /* black text */
+          text-decoration: none !important;
+          color: #f0f0f0 !important;
           display: block;
         }
         .service-card:hover {
           transform: translateY(-5px);
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
         }
         .service-image img {
           width: 100%;
@@ -104,18 +100,18 @@ const Services: NextPage = () => {
           transform: scale(1.05);
         }
         .service-title {
-          padding: 1rem;
+          padding: 0.8rem; /* Reduced padding */
           text-align: left;
         }
         .service-title h2 {
-          font-size: 1.5rem;
-          margin-bottom: 0.5rem;
-          color: #000 !important; /* ensure black */
+          font-size: 1.25rem; /* Reduced from 1.5rem */
+          margin-bottom: 0.4rem;
+          color: #f0f0f0 !important;
           text-decoration: none !important;
         }
         .service-title p {
-          font-size: 1rem;
-          color: #555 !important; /* slightly lighter */
+          font-size: 0.95rem; /* Slightly smaller */
+          color: #ccc !important;
           text-decoration: none !important;
         }
         @media (max-width: 768px) {

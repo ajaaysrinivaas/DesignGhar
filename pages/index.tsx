@@ -13,17 +13,12 @@ const testimonialsData = [
 ];
 
 const Home: NextPage = () => {
-  // Refs for GSAP animations and canvas
   const heroRef = useRef<HTMLDivElement>(null);
   const projectRefs = useRef<HTMLDivElement[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  // Allow null as initial value so TypeScript doesn't complain
   const animationFrameId = useRef<number | null>(null);
-
-  // Testimonial state for slider
   const [testimonialIndex, setTestimonialIndex] = useState(0);
 
-  // Animate hero content on load
   useEffect(() => {
     if (heroRef.current) {
       gsap.from(heroRef.current, { duration: 1, opacity: 0, y: -50 });
@@ -31,14 +26,12 @@ const Home: NextPage = () => {
     gsap.from(projectRefs.current, { duration: 1, opacity: 0, y: 30, stagger: 0.2 });
   }, []);
 
-  // Register project cards for GSAP animation
   const addProjectRef = (el: HTMLDivElement) => {
     if (el && !projectRefs.current.includes(el)) {
       projectRefs.current.push(el);
     }
   };
 
-  // Canvas animation: abstract moving lines (black and white)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -46,17 +39,9 @@ const Home: NextPage = () => {
     if (!ctx) return;
 
     let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight * 0.6); // use 60% of viewport height for hero
+    let height = (canvas.height = window.innerHeight * 0.6);
 
-    // Create a set of line objects with random properties
-    const lines: {
-      x: number;
-      y: number;
-      length: number;
-      speed: number;
-      angle: number;
-    }[] = [];
-
+    const lines: { x: number; y: number; length: number; speed: number; angle: number }[] = [];
     const numLines = 50;
     for (let i = 0; i < numLines; i++) {
       lines.push({
@@ -68,21 +53,17 @@ const Home: NextPage = () => {
       });
     }
 
-    // Animation loop: clear canvas and redraw each line with slight movement
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = '#222';
+      ctx.strokeStyle = '#f0f0f0';
       ctx.lineWidth = 2;
       lines.forEach((line) => {
-        // Update line position
         line.x += Math.cos(line.angle) * line.speed;
         line.y += Math.sin(line.angle) * line.speed;
-        // Wrap around the canvas boundaries
         if (line.x > width) line.x = 0;
         if (line.x < 0) line.x = width;
         if (line.y > height) line.y = 0;
         if (line.y < 0) line.y = height;
-        // Draw line
         ctx.beginPath();
         ctx.moveTo(line.x, line.y);
         ctx.lineTo(
@@ -96,20 +77,17 @@ const Home: NextPage = () => {
 
     draw();
 
-    // Update canvas size on window resize
     const handleResize = () => {
       width = (canvas.width = window.innerWidth);
       height = (canvas.height = window.innerHeight * 0.6);
     };
     window.addEventListener('resize', handleResize);
-
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  // Testimonial slider effect
   useEffect(() => {
     const interval = setInterval(() => {
       setTestimonialIndex((prevIndex) => (prevIndex + 1) % testimonialsData.length);
@@ -121,7 +99,7 @@ const Home: NextPage = () => {
     <div className="container">
       <Header />
       <main>
-        {/* HERO SECTION WITH LIGHER CANVAS AND GRADIENT OVERLAY */}
+        {/* HERO SECTION */}
         <section className="hero-section">
           <canvas ref={canvasRef} className="hero-canvas" />
           <div className="gradient-overlay" />
@@ -141,7 +119,7 @@ const Home: NextPage = () => {
               <div className="project-image" style={{ backgroundImage: 'url(/project1.jpg)' }}></div>
               <div className="project-info">
                 <h3>Urban Monochrome</h3>
-                <p>A sleek city abode blending dark accents with pristine white finishes.</p>
+                <p>A sleek city abode blending dark accents with pristine finishes.</p>
               </div>
             </div>
             <div className="project-card" ref={addProjectRef}>
@@ -182,13 +160,13 @@ const Home: NextPage = () => {
       <Footer />
 
       <style jsx>{`
-        /* Container & Global Styles */
+        /* Global Container */
         .container {
           display: flex;
           flex-direction: column;
           min-height: 100vh;
-          background-color: #fff;
-          color: #222;
+          background-color: #1f1f1f; /* Slightly lighter dark background */
+          color: #f0f0f0;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         main {
@@ -208,7 +186,7 @@ const Home: NextPage = () => {
           left: 0;
           width: 100%;
           height: 100%;
-          background: #f9f9f9;
+          background: #1a1a1a;
           z-index: 0;
         }
         .gradient-overlay {
@@ -218,22 +196,23 @@ const Home: NextPage = () => {
           width: 100%;
           height: 100%;
           z-index: 0;
-          background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15));
         }
         .hero-content {
           position: relative;
           z-index: 1;
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(30, 30, 30, 0.95);
+          backdrop-filter: blur(8px); /* Background blur for depth */
           padding: 2rem;
           border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
           text-align: center;
           max-width: 600px;
           margin: 0 auto;
           top: 50%;
           transform: translateY(-50%);
         }
-        .logo {
+        .hero-content .logo {
           width: 80px;
           height: 80px;
           border-radius: 50%;
@@ -244,16 +223,16 @@ const Home: NextPage = () => {
         .hero-content h1 {
           font-size: 2rem;
           margin: 0.5rem 0 1rem;
-          color: #222;
+          color: #f0f0f0;
         }
         .tagline {
           font-size: 1.1rem;
           margin-bottom: 2rem;
-          color: #444;
+          color: #ccc;
         }
         .cta-button {
-          background: #222;
-          color: #fff;
+          background: #f0f0f0;
+          color: #1f1f1f;
           border: none;
           padding: 0.75rem 1.5rem;
           font-size: 1rem;
@@ -262,19 +241,20 @@ const Home: NextPage = () => {
           transition: background 0.3s, transform 0.3s;
         }
         .cta-button:hover {
-          background: #444;
+          background: #e0e0e0;
           transform: scale(1.05);
         }
 
         /* FEATURED PROJECTS SECTION */
         .featured-projects {
           padding: 3rem 2rem;
-          background-color: #fff;
+          background-color: #1f1f1f;
         }
         .featured-projects h2 {
           text-align: center;
           font-size: 2rem;
           margin-bottom: 2rem;
+          color: #f0f0f0;
         }
         .projects-grid {
           display: grid;
@@ -284,16 +264,17 @@ const Home: NextPage = () => {
           margin: 0 auto;
         }
         .project-card {
-          background-color: #f9f9f9;
+          background-color: #292929; /* Slightly lighter than container */
+          border: 1px solid #333; /* Subtle border */
           border-radius: 8px;
           overflow: hidden;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
           transition: transform 0.3s, box-shadow 0.3s;
           cursor: pointer;
         }
         .project-card:hover {
           transform: translateY(-3px);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
         }
         .project-image {
           height: 160px;
@@ -307,21 +288,20 @@ const Home: NextPage = () => {
           margin-top: 0;
           font-size: 1.25rem;
           margin-bottom: 0.5rem;
-          color: #222;
+          color: #f0f0f0;
         }
         .project-info p {
           font-size: 0.95rem;
-          color: #555;
+          color: #ccc;
         }
 
         /* TESTIMONIALS SECTION */
         .testimonials {
           position: relative;
           padding: 3rem 2rem;
-          background-color: #f7f7f7;
+          background-color: #121212;
           text-align: center;
         }
-        /* Pseudo-element for subtle section separation */
         .testimonials::before {
           content: "";
           position: absolute;
@@ -329,7 +309,7 @@ const Home: NextPage = () => {
           left: 0;
           width: 100%;
           height: 50px;
-          background: #f7f7f7;
+          background: #121212;
           transform: skewY(-3deg);
           transform-origin: top left;
           z-index: -1;
@@ -337,13 +317,14 @@ const Home: NextPage = () => {
         .testimonials h2 {
           font-size: 2rem;
           margin-bottom: 2rem;
+          color: #f0f0f0;
         }
         .testimonial-slider {
           max-width: 800px;
           margin: 0 auto;
           position: relative;
           font-size: 1.1rem;
-          color: #444;
+          color: #ccc;
         }
         .testimonial-text {
           font-style: italic;
@@ -351,6 +332,7 @@ const Home: NextPage = () => {
         }
         .testimonial-name {
           font-weight: bold;
+          color: #f0f0f0;
         }
 
         /* Responsive Breakpoints */
