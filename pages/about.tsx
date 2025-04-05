@@ -1,9 +1,11 @@
-// pages/about.tsx
 import type { NextPage } from 'next';
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const About: NextPage = () => {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
@@ -14,12 +16,18 @@ const About: NextPage = () => {
   };
 
   useEffect(() => {
-    gsap.from(sectionsRef.current, {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: 'power2.out',
+    sectionsRef.current.forEach((section) => {
+      gsap.from(section, {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: 'power2.out',
+      });
     });
   }, []);
 
@@ -27,7 +35,7 @@ const About: NextPage = () => {
     <div className="about-page">
       <Header />
       <main>
-        {/* About Introduction - Centered, no image */}
+        {/* About Introduction */}
         <section ref={addToRefs} className="section about-intro centered">
           <div className="content">
             <h1>About Design Ghar</h1>
@@ -99,68 +107,75 @@ const About: NextPage = () => {
 
       <style jsx>{`
         .about-page {
-          background: #1c1c1c;
+          position: relative;
+          background: linear-gradient(135deg, #1c1c1c, #292929);
+          animation: gradientShift 10s ease infinite;
           color: #f0f0f0;
           min-height: 100vh;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
           padding-bottom: 1rem;
         }
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
         main {
           max-width: 1000px;
-          margin: 1.5rem auto;
+          margin: 1rem auto;
           padding: 0 1rem;
         }
         .section {
           display: flex;
           align-items: center;
-          padding: 1.2rem 1rem;
-          border-bottom: 1px solid #333;
+          padding: 1.5rem 1rem;
           margin-bottom: 1.5rem;
           transition: transform 0.3s ease, box-shadow 0.3s ease;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          background: rgba(40, 40, 40, 0.95);
         }
         .section:hover {
           transform: translateY(-2px);
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
         }
-        .section:last-child {
-          border-bottom: none;
-        }
         .content {
           flex: 1;
-          padding: 1rem;
-          background: rgba(40, 40, 40, 0.95);
-          border-radius: 6px;
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+          padding: 0.75rem;
           font-size: 0.95rem;
+          line-height: 1.4;
+          color: #ccc;
         }
         .content h1 {
-          font-size: 2rem;
+          font-size: 1.8rem;
           margin-bottom: 0.5rem;
         }
         .content h2 {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           margin-bottom: 0.5rem;
-        }
-        .content p {
-          font-size: 1rem;
-          line-height: 1.5;
-          color: #ccc;
         }
         .image {
           flex: 1;
-          padding: 1rem;
+          padding: 0.75rem;
           display: flex;
           justify-content: center;
         }
         .section-image {
           width: 90%;
-          max-width: 350px;
+          max-width: 300px;
           border-radius: 6px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
-          transition: transform 0.3s ease;
+          transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
         }
         .section-image:hover {
           transform: scale(1.03);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
         }
         /* Alternating layout */
         .image-right .content {

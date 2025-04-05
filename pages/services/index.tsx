@@ -1,20 +1,30 @@
-// pages/services/index.tsx
 import type { NextPage } from 'next';
 import { useEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Link from 'next/link';
 import { services } from '../../data/servicesData';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Services: NextPage = () => {
   useEffect(() => {
-    gsap.from('.service-card', {
-      opacity: 0,
-      duration: 0.8,
-      y: 20,
-      stagger: 0.2,
-      ease: 'power2.out',
+    // Animate each service card on scroll
+    const serviceCards = gsap.utils.toArray('.service-card') as HTMLElement[];
+    serviceCards.forEach((card) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        ease: 'power2.out',
+      });
     });
   }, []);
 
@@ -31,21 +41,22 @@ const Services: NextPage = () => {
             <Link
               href={`/services/${service.id}`}
               key={service.id}
-              className="service-card"
+              legacyBehavior
             >
-              <div className="service-image">
-                <img src={service.image} alt={service.title} />
-              </div>
-              <div className="service-title">
-                <h2>{service.title}</h2>
-                <p>{service.description}</p>
-              </div>
+              <a className="service-card">
+                <div className="service-image">
+                  <img src={service.image} alt={service.title} />
+                </div>
+                <div className="service-title">
+                  <h2>{service.title}</h2>
+                  <p>{service.description}</p>
+                </div>
+              </a>
             </Link>
           ))}
         </div>
       </main>
       <Footer />
-
       <style jsx>{`
         .services-page {
           background: #1c1c1c;
@@ -58,14 +69,15 @@ const Services: NextPage = () => {
           margin: 1.5rem auto;
           padding: 0 1rem;
           text-align: center;
+          margin-bottom: 4rem; /* Increased bottom margin to separate content from Footer */
         }
         h1 {
-          font-size: 2rem; /* Reduced from 2.8rem */
+          font-size: 2rem;
           margin-bottom: 0.8rem;
           color: #f0f0f0;
         }
         p {
-          font-size: 1rem; /* Reduced from 1.1rem */
+          font-size: 1rem;
           margin-bottom: 1.5rem;
           color: #ccc;
         }
@@ -100,17 +112,17 @@ const Services: NextPage = () => {
           transform: scale(1.05);
         }
         .service-title {
-          padding: 0.8rem; /* Reduced padding */
+          padding: 0.8rem;
           text-align: left;
         }
         .service-title h2 {
-          font-size: 1.25rem; /* Reduced from 1.5rem */
+          font-size: 1.25rem;
           margin-bottom: 0.4rem;
           color: #f0f0f0 !important;
           text-decoration: none !important;
         }
         .service-title p {
-          font-size: 0.95rem; /* Slightly smaller */
+          font-size: 0.95rem;
           color: #ccc !important;
           text-decoration: none !important;
         }

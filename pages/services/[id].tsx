@@ -1,8 +1,8 @@
-// pages/services/[id].tsx
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import gsap from 'gsap';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -13,30 +13,45 @@ const services = [
     title: 'Consultation',
     description: 'In-depth discussions to understand your vision and create a personalized design plan.',
     image: '/service-consultation.jpg',
-    details: 'Detailed information about Consultation. Elaborate on your process, timeline, and benefits here.',
+    details:
+      'Detailed information about Consultation. Elaborate on your process, timeline, and benefits here.',
   },
   {
     id: 'space-planning',
     title: 'Space Planning',
     description: 'Strategic planning to optimize your space’s functionality and aesthetic appeal.',
     image: '/service-space-planning.jpg',
-    details: 'Detailed information about Space Planning. Provide more background, approach, and examples here.',
+    details:
+      'Detailed information about Space Planning. Provide more background, approach, and examples here.',
   },
   {
     id: 'bespoke-design',
     title: 'Bespoke Design',
     description: 'Custom design solutions crafted to reflect your personal style and lifestyle.',
     image: '/service-bespoke-design.jpg',
-    details: 'Detailed information about Bespoke Design. Discuss your unique approach, custom materials, etc.',
+    details:
+      'Detailed information about Bespoke Design. Discuss your unique approach, custom materials, etc.',
   },
 ];
 
 const ServicePopup: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const popupRef = useRef<HTMLDivElement>(null);
 
   // Find the service by ID
   const service = services.find((s) => s.id === id);
+
+  useEffect(() => {
+    // Animate the popup container on mount
+    if (popupRef.current) {
+      gsap.fromTo(
+        popupRef.current,
+        { opacity: 0, scale: 0.9, y: -20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+      );
+    }
+  }, []);
 
   if (!service) {
     return (
@@ -52,6 +67,40 @@ const ServicePopup: NextPage = () => {
           </Link>
         </main>
         <Footer />
+        <style jsx>{`
+          .not-found-page {
+            background: #1c1c1c;
+            color: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          }
+          main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            flex: 1;
+            text-align: center;
+          }
+          button {
+            background: #f0f0f0;
+            color: #1c1c1c;
+            border: none;
+            padding: 0.65rem 1.3rem;
+            margin: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 0.95rem;
+          }
+          button:hover {
+            background: #e0e0e0;
+            transform: scale(1.05);
+          }
+        `}</style>
       </div>
     );
   }
@@ -60,7 +109,7 @@ const ServicePopup: NextPage = () => {
     <div className="popup-page">
       <Header />
       <main>
-        <div className="popup-container">
+        <div className="popup-container" ref={popupRef}>
           <h1>{service.title}</h1>
           <img src={service.image} alt={service.title} />
           <p>{service.details}</p>
@@ -95,14 +144,15 @@ const ServicePopup: NextPage = () => {
         .popup-container {
           max-width: 550px;
           background: #2b2b2b;
-          padding: 1.5rem;
+          padding: 2rem 1.5rem;
           border-radius: 8px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
           text-align: center;
+          transform-origin: center;
         }
         .popup-container h1 {
-          font-size: 1.75rem; /* Reduced font size */
-          margin-bottom: 0.8rem;
+          font-size: 1.8rem;
+          margin-bottom: 1rem;
           color: #f0f0f0;
         }
         .popup-container img {
@@ -110,21 +160,21 @@ const ServicePopup: NextPage = () => {
           max-width: 350px;
           height: auto;
           object-fit: cover;
-          margin: 0.8rem auto;
+          margin: 1rem auto;
           border-radius: 4px;
           box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
         }
         .popup-container p {
-          font-size: 1rem; /* Reduced font size */
+          font-size: 1rem;
           color: #ccc;
-          margin-bottom: 1rem;
+          margin-bottom: 1.5rem;
           line-height: 1.5;
         }
         .contact-button {
           background: #f0f0f0;
           color: #1c1c1c;
           border: none;
-          padding: 0.65rem 1.3rem;
+          padding: 0.75rem 1.5rem;
           margin: 0.5rem;
           border-radius: 4px;
           cursor: pointer;
@@ -139,7 +189,7 @@ const ServicePopup: NextPage = () => {
           background: transparent;
           border: 1px solid #ccc;
           color: #ccc;
-          padding: 0.65rem 1.3rem;
+          padding: 0.75rem 1.5rem;
           margin: 0.5rem;
           border-radius: 4px;
           cursor: pointer;
@@ -153,6 +203,7 @@ const ServicePopup: NextPage = () => {
         @media (max-width: 768px) {
           .popup-container {
             width: 90%;
+            padding: 1.5rem;
           }
         }
       `}</style>
