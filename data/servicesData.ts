@@ -19,7 +19,7 @@ export interface Service {
       id: 'space-planning',
       title: 'Space Planning',
       description: 'Strategic planning to optimize your space’s functionality and aesthetic appeal.',
-      image: '/spaceplanning.jpg',
+      image: '/space.jpg',
       details: 'Detailed info about Space Planning. Provide more background, approach, and examples.',
     },
     {

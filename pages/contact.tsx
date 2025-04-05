@@ -1,3 +1,4 @@
+// pages/contact.tsx
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import Header from '../components/Header';
@@ -5,7 +6,7 @@ import Footer from '../components/Footer';
 import { useForm, ValidationError } from '@formspree/react';
 
 function ContactForm() {
-  const [state, handleSubmit] = useForm('xanejbke'); // Replace with your Formspree endpoint
+  const [state, handleSubmit] = useForm('manepgbj'); // Replace with your Formspree endpoint
 
   if (state.succeeded) {
     return <p className="success-message">Thank you for contacting Design Ghar!</p>;
@@ -18,52 +19,52 @@ function ContactForm() {
         <div className="form-row">
           <div className="form-cell">
             <label htmlFor="name">Your Name</label>
-            <input id="name" type="text" name="name" required />
-            <ValidationError prefix="Name" field="name" errors={state.errors} />
+            <input id="name" type="text" name="Name" required />
+            <ValidationError prefix="Name" field="Name" errors={state.errors} />
           </div>
         </div>
         {/* Row: Phone Number */}
         <div className="form-row">
           <div className="form-cell">
             <label htmlFor="phone">Phone Number</label>
-            <input id="phone" type="tel" name="phone" required />
-            <ValidationError prefix="Phone" field="phone" errors={state.errors} />
+            <input id="phone" type="tel" name="Phone" required />
+            <ValidationError prefix="Phone" field="Phone" errors={state.errors} />
           </div>
         </div>
         {/* Row: Email Address */}
         <div className="form-row">
           <div className="form-cell">
             <label htmlFor="email">Email Address</label>
-            <input id="email" type="email" name="email" required />
-            <ValidationError prefix="Email" field="email" errors={state.errors} />
+            <input id="email" type="email" name="Email" required />
+            <ValidationError prefix="Email" field="Email" errors={state.errors} />
           </div>
         </div>
         {/* Row: Project Type */}
         <div className="form-row">
           <div className="form-cell">
             <label htmlFor="projectType">Project Type</label>
-            <select id="projectType" name="projectType">
+            <select id="projectType" name="ProjectType">
               <option value="">Select a project type</option>
               <option value="Residential">Residential</option>
               <option value="Commercial">Commercial</option>
               <option value="Renovation">Renovation</option>
               <option value="Other">Other</option>
             </select>
-            <ValidationError prefix="ProjectType" field="projectType" errors={state.errors} />
+            <ValidationError prefix="ProjectType" field="ProjectType" errors={state.errors} />
           </div>
         </div>
         {/* Row: Budget Range */}
         <div className="form-row">
           <div className="form-cell">
             <label htmlFor="budgetRange">Budget Range</label>
-            <select id="budgetRange" name="budgetRange">
+            <select id="budgetRange" name="BudgetRange">
               <option value="">Select your budget range</option>
               <option value="Under ₹3 Lakhs">Under ₹3 Lakhs</option>
               <option value="₹3 Lakhs - ₹7 Lakhs">₹3 Lakhs - ₹7 Lakhs</option>
               <option value="₹7 Lakhs - ₹15 Lakhs">₹7 Lakhs - ₹15 Lakhs</option>
               <option value="Over ₹15 Lakhs">Over ₹15 Lakhs</option>
             </select>
-            <ValidationError prefix="BudgetRange" field="budgetRange" errors={state.errors} />
+            <ValidationError prefix="BudgetRange" field="BudgetRange" errors={state.errors} />
           </div>
         </div>
         {/* Row: Project Address */}
@@ -73,19 +74,19 @@ function ContactForm() {
             <input
               id="address"
               type="text"
-              name="address"
+              name="Address"
               placeholder="e.g., Jubilee Hills, Hyderabad"
               required
             />
-            <ValidationError prefix="Address" field="address" errors={state.errors} />
+            <ValidationError prefix="Address" field="Address" errors={state.errors} />
           </div>
         </div>
         {/* Row: Your Message */}
         <div className="form-row">
           <div className="form-cell">
             <label htmlFor="message">Your Message</label>
-            <textarea id="message" name="message" rows={4} required />
-            <ValidationError prefix="Message" field="message" errors={state.errors} />
+            <textarea id="message" name="Message" rows={4} required />
+            <ValidationError prefix="Message" field="Message" errors={state.errors} />
           </div>
         </div>
       </div>
@@ -110,7 +111,6 @@ function ContactForm() {
         .form-cell {
           display: table-cell;
           width: 100%;
-          padding-right: 0.5rem;
         }
         label {
           display: block;
@@ -159,18 +159,6 @@ function ContactForm() {
           text-align: center;
           margin-top: 1rem;
         }
-        @media (max-width: 600px) {
-          .form-cell {
-            display: block;
-            padding-right: 0;
-          }
-          input,
-          select,
-          textarea {
-            padding: 0.8rem;
-            font-size: 0.95rem;
-          }
-        }
       `}</style>
     </form>
   );
@@ -213,22 +201,22 @@ const FAQ: React.FC = () => {
         .faqs {
           max-width: 100%;
           margin: 2rem 0;
-          padding: 1rem 1.5rem;
+          padding: 1.5rem 2rem;
           background: #141414;
           border-radius: 12px;
           text-align: center;
         }
         .faqs h2 {
           font-size: 1.8rem;
-          margin-bottom: 1.5rem;
+          margin-bottom: 2rem;
           color: #f0f0f0;
         }
         .faq-card {
-          background: rgba(43, 43, 43, 0.85);
-          border-radius: 20px;
+          background: rgba(43, 43, 43, 0.8);
+          border-radius: 30px;
           border: 1px solid rgba(0, 0, 0, 0.3);
-          padding: 1rem 1.5rem;
-          margin-bottom: 1rem;
+          padding: 1.5rem 2rem;
+          margin-bottom: 1.5rem;
           transition: background 0.3s ease;
           cursor: pointer;
           text-align: left;
@@ -237,30 +225,15 @@ const FAQ: React.FC = () => {
           background: rgba(43, 43, 43, 1);
         }
         .faq-card h3 {
-          margin: 0 0 0.5rem;
-          font-size: 1.1rem;
+          margin: 0 0 0.8rem;
+          font-size: 1.2rem;
           color: #f0f0f0;
         }
         .faq-card p {
           margin: 0;
-          font-size: 0.95rem;
+          font-size: 1rem;
           color: #ccc;
-          line-height: 1.4;
-        }
-        @media (max-width: 600px) {
-          .faqs {
-            padding: 0.8rem 1rem;
-          }
-          .faq-card {
-            padding: 0.8rem 1rem;
-            margin-bottom: 0.8rem;
-          }
-          .faq-card h3 {
-            font-size: 1rem;
-          }
-          .faq-card p {
-            font-size: 0.9rem;
-          }
+          line-height: 1.5;
         }
       `}</style>
     </div>
@@ -289,7 +262,10 @@ const Contact: NextPage = () => {
               <p>
                 <strong>Address:</strong> Design Ghar, Jubilee Hills, Hyderabad, India
               </p>
-                          </div>
+              <p>
+                <strong>Call us:</strong> +91 12345 67890
+              </p>
+            </div>
           </div>
           {/* Right Column: Contact Form */}
           <div className="right-column card">
