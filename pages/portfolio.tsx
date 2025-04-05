@@ -39,7 +39,7 @@ const Portfolio: NextPage = () => {
           <Link href="/portfolio/modern-minimalist-residence" legacyBehavior>
             <a className="project">
               <div className="project-image">
-                <img src="/project1.jpg" alt="Modern Minimalist Residence" />
+                <img src="/Project1.jpg" alt="Modern Minimalist Residence" />
                 <div className="image-overlay" />
               </div>
               <div className="project-info">
@@ -51,7 +51,7 @@ const Portfolio: NextPage = () => {
           <Link href="/portfolio/luxury-penthouse" legacyBehavior>
             <a className="project">
               <div className="project-image">
-                <img src="/project2.jpg" alt="Luxury Penthouse" />
+                <img src="/Project2.jpg" alt="Luxury Penthouse" />
                 <div className="image-overlay" />
               </div>
               <div className="project-info">
@@ -63,7 +63,7 @@ const Portfolio: NextPage = () => {
           <Link href="/portfolio/eco-friendly-office" legacyBehavior>
             <a className="project">
               <div className="project-image">
-                <img src="/project3.jpg" alt="Eco-Friendly Office" />
+                <img src="/Project3.jpg" alt="Eco-Friendly Office" />
                 <div className="image-overlay" />
               </div>
               <div className="project-info">
@@ -75,7 +75,7 @@ const Portfolio: NextPage = () => {
           <Link href="/portfolio/contemporary-cafe" legacyBehavior>
             <a className="project">
               <div className="project-image">
-                <img src="/project4.jpg" alt="Contemporary Café" />
+                <img src="/Project4.jpg" alt="Contemporary Café" />
                 <div className="image-overlay" />
               </div>
               <div className="project-info">
