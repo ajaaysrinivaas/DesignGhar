@@ -19,11 +19,22 @@ const Home: NextPage = () => {
   const animationFrameId = useRef<number | null>(null);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
 
+  // GSAP animations - only on larger screens
   useEffect(() => {
-    if (heroRef.current) {
-      gsap.from(heroRef.current, { duration: 1, opacity: 0, y: -50 });
-    }
-    gsap.from(projectRefs.current, { duration: 1, opacity: 0, y: 30, stagger: 0.2 });
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 768px)", () => {
+      if (heroRef.current) {
+        gsap.from(heroRef.current, { duration: 1, opacity: 0, y: -50 });
+      }
+      gsap.from(projectRefs.current, { duration: 1, opacity: 0, y: 30, stagger: 0.2 });
+    });
+    mm.add("(max-width: 767px)", () => {
+      if (heroRef.current) {
+        gsap.set(heroRef.current, { opacity: 1, y: 0 });
+      }
+      gsap.set(projectRefs.current, { opacity: 1, y: 0 });
+    });
+    return () => mm.revert();
   }, []);
 
   const addProjectRef = (el: HTMLDivElement) => {
@@ -32,6 +43,7 @@ const Home: NextPage = () => {
     }
   };
 
+  // Canvas background animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -39,7 +51,7 @@ const Home: NextPage = () => {
     if (!ctx) return;
 
     let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight * 0.6);
+    let height = (canvas.height = window.innerHeight * (window.innerWidth < 768 ? 0.5 : 0.6));
 
     const lines: { x: number; y: number; length: number; speed: number; angle: number }[] = [];
     const numLines = 50;
@@ -79,7 +91,7 @@ const Home: NextPage = () => {
 
     const handleResize = () => {
       width = (canvas.width = window.innerWidth);
-      height = (canvas.height = window.innerHeight * 0.6);
+      height = (canvas.height = window.innerWidth < 768 ? window.innerHeight * 0.5 : window.innerHeight * 0.6);
     };
     window.addEventListener('resize', handleResize);
     return () => {
@@ -88,6 +100,7 @@ const Home: NextPage = () => {
     };
   }, []);
 
+  // Testimonials auto-rotate
   useEffect(() => {
     const interval = setInterval(() => {
       setTestimonialIndex((prevIndex) => (prevIndex + 1) % testimonialsData.length);
@@ -116,28 +129,28 @@ const Home: NextPage = () => {
           <h2>Featured Projects</h2>
           <div className="projects-grid">
             <div className="project-card" ref={addProjectRef}>
-              <div className="project-image" style={{ backgroundImage: 'url(/project1.jpg)' }}></div>
+              <div className="project-image" style={{ backgroundImage: 'url(/Project1.jpg)' }}></div>
               <div className="project-info">
                 <h3>Urban Monochrome</h3>
                 <p>A sleek city abode blending dark accents with pristine finishes.</p>
               </div>
             </div>
             <div className="project-card" ref={addProjectRef}>
-              <div className="project-image" style={{ backgroundImage: 'url(/project2.jpg)' }}></div>
+              <div className="project-image" style={{ backgroundImage: 'url(/Project2.jpg)' }}></div>
               <div className="project-info">
                 <h3>Minimalist Haven</h3>
                 <p>Clean lines, airy layouts, and soft neutral tones for peaceful living.</p>
               </div>
             </div>
             <div className="project-card" ref={addProjectRef}>
-              <div className="project-image" style={{ backgroundImage: 'url(/project3.jpg)' }}></div>
+              <div className="project-image" style={{ backgroundImage: 'url(/Project3.jpg)' }}></div>
               <div className="project-info">
                 <h3>Rustic Modern Blend</h3>
                 <p>Where reclaimed wood meets contemporary touches in a cozy retreat.</p>
               </div>
             </div>
             <div className="project-card" ref={addProjectRef}>
-              <div className="project-image" style={{ backgroundImage: 'url(/project4.jpg)' }}></div>
+              <div className="project-image" style={{ backgroundImage: 'url(/Project4.jpg)' }}></div>
               <div className="project-info">
                 <h3>Scandinavian Chic</h3>
                 <p>Light palettes, functional furnishings, and an inviting Nordic charm.</p>
@@ -165,7 +178,7 @@ const Home: NextPage = () => {
           display: flex;
           flex-direction: column;
           min-height: 100vh;
-          background-color: #1f1f1f; /* Slightly lighter dark background */
+          background-color: #1f1f1f;
           color: #f0f0f0;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -202,7 +215,7 @@ const Home: NextPage = () => {
           position: relative;
           z-index: 1;
           background: rgba(30, 30, 30, 0.95);
-          backdrop-filter: blur(8px); /* Background blur for depth */
+          backdrop-filter: blur(8px);
           padding: 2rem;
           border-radius: 8px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -217,13 +230,11 @@ const Home: NextPage = () => {
           height: 80px;
           border-radius: 50%;
           object-fit: cover;
-          display: block;
           margin: 0 auto 1rem;
         }
         .hero-content h1 {
           font-size: 2rem;
           margin: 0.5rem 0 1rem;
-          color: #f0f0f0;
         }
         .tagline {
           font-size: 1.1rem;
@@ -254,7 +265,6 @@ const Home: NextPage = () => {
           text-align: center;
           font-size: 2rem;
           margin-bottom: 2rem;
-          color: #f0f0f0;
         }
         .projects-grid {
           display: grid;
@@ -264,8 +274,8 @@ const Home: NextPage = () => {
           margin: 0 auto;
         }
         .project-card {
-          background-color: #292929; /* Slightly lighter than container */
-          border: 1px solid #333; /* Subtle border */
+          background-color: #292929;
+          border: 1px solid #333;
           border-radius: 8px;
           overflow: hidden;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
@@ -285,10 +295,8 @@ const Home: NextPage = () => {
           padding: 1rem;
         }
         .project-info h3 {
-          margin-top: 0;
           font-size: 1.25rem;
           margin-bottom: 0.5rem;
-          color: #f0f0f0;
         }
         .project-info p {
           font-size: 0.95rem;
@@ -317,12 +325,10 @@ const Home: NextPage = () => {
         .testimonials h2 {
           font-size: 2rem;
           margin-bottom: 2rem;
-          color: #f0f0f0;
         }
         .testimonial-slider {
           max-width: 800px;
           margin: 0 auto;
-          position: relative;
           font-size: 1.1rem;
           color: #ccc;
         }
@@ -352,6 +358,12 @@ const Home: NextPage = () => {
           }
           .projects-grid {
             grid-template-columns: 1fr;
+          }
+          .featured-projects {
+            padding: 2rem 1rem;
+          }
+          .testimonials {
+            padding: 2rem 1rem;
           }
         }
       `}</style>

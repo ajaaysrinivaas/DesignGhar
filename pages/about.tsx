@@ -16,23 +16,32 @@ const About: NextPage = () => {
   };
 
   useEffect(() => {
-    sectionsRef.current.forEach((section) => {
-      gsap.from(section, {
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        ease: 'power2.out',
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 768px)", () => {
+      sectionsRef.current.forEach((section) => {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.5,
+          ease: 'power2.out',
+        });
       });
     });
+    mm.add("(max-width: 767px)", () => {
+      sectionsRef.current.forEach((section) => {
+        gsap.set(section, { opacity: 1, y: 0 });
+      });
+    });
+    return () => mm.revert();
   }, []);
 
   return (
-    <div className="about-page">
+    <div className="page-container">
       <Header />
       <main>
         {/* About Introduction */}
@@ -106,14 +115,14 @@ const About: NextPage = () => {
       <Footer />
 
       <style jsx>{`
-        .about-page {
-          position: relative;
+        .page-container {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
           background: linear-gradient(135deg, #1c1c1c, #292929);
           animation: gradientShift 10s ease infinite;
           color: #f0f0f0;
-          min-height: 100vh;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          padding-bottom: 1rem;
         }
         @keyframes gradientShift {
           0% {
@@ -127,6 +136,7 @@ const About: NextPage = () => {
           }
         }
         main {
+          flex: 1;
           max-width: 1000px;
           margin: 1rem auto;
           padding: 0 1rem;
@@ -148,16 +158,16 @@ const About: NextPage = () => {
         .content {
           flex: 1;
           padding: 0.75rem;
-          font-size: 0.95rem;
-          line-height: 1.4;
+          font-size: 1rem;
+          line-height: 1.6;
           color: #ccc;
         }
         .content h1 {
-          font-size: 1.8rem;
+          font-size: 2rem;
           margin-bottom: 0.5rem;
         }
         .content h2 {
-          font-size: 1.4rem;
+          font-size: 1.5rem;
           margin-bottom: 0.5rem;
         }
         .image {
@@ -169,7 +179,7 @@ const About: NextPage = () => {
         .section-image {
           width: 90%;
           max-width: 300px;
-          border-radius: 6px;
+          border-radius: 8px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
         }
@@ -177,7 +187,6 @@ const About: NextPage = () => {
           transform: scale(1.03);
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
         }
-        /* Alternating layout */
         .image-right .content {
           order: 1;
         }
@@ -190,21 +199,33 @@ const About: NextPage = () => {
         .image-left .image {
           order: 1;
         }
-        /* Centered layout */
         .centered {
           justify-content: center;
           text-align: center;
         }
         @media (max-width: 768px) {
+          main {
+            padding: 0 0.5rem;
+            margin: 0.5rem auto;
+          }
           .section {
             flex-direction: column;
             text-align: center;
-            padding: 1rem 0;
+            padding: 1rem 0.5rem;
+            margin-bottom: 1rem;
           }
-          .content,
+          .content {
+            padding: 0.5rem;
+            font-size: 0.95rem;
+          }
+          .content h1 {
+            font-size: 1.8rem;
+          }
+          .content h2 {
+            font-size: 1.3rem;
+          }
           .image {
-            order: unset;
-            padding: 0.5rem 0;
+            padding: 0.5rem;
           }
           .section-image {
             max-width: 80%;

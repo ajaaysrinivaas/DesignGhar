@@ -10,21 +10,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Portfolio: NextPage = () => {
   useEffect(() => {
-    // Animate each project on scroll, similar to the About page
-    const projects = gsap.utils.toArray('.project') as HTMLElement[];
-    projects.forEach((project) => {
-      gsap.from(project, {
-        scrollTrigger: {
-          trigger: project,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        ease: 'power2.out',
+    const mm = gsap.matchMedia();
+    // Animations for larger screens
+    mm.add("(min-width: 768px)", () => {
+      const projects = gsap.utils.toArray('.project') as HTMLElement[];
+      projects.forEach((project) => {
+        gsap.from(project, {
+          scrollTrigger: {
+            trigger: project,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          ease: 'power2.out',
+        });
       });
     });
+    // Disable animations on mobile
+    mm.add("(max-width: 767px)", () => {
+      const projects = gsap.utils.toArray('.project') as HTMLElement[];
+      gsap.set(projects, { opacity: 1, y: 0 });
+    });
+    return () => mm.revert();
   }, []);
 
   return (
@@ -87,6 +96,7 @@ const Portfolio: NextPage = () => {
         </div>
       </main>
       <Footer />
+
       <style jsx>{`
         .portfolio-page {
           background: #1c1c1c;
@@ -169,6 +179,9 @@ const Portfolio: NextPage = () => {
           line-height: 1.5;
         }
         @media (max-width: 768px) {
+          .gallery {
+            grid-template-columns: 1fr;
+          }
           .project-info {
             text-align: center;
           }

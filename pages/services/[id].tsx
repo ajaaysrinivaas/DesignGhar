@@ -12,25 +12,31 @@ const services = [
     id: 'consultation',
     title: 'Consultation',
     description: 'In-depth discussions to understand your vision and create a personalized design plan.',
-    image: '/service-consultation.jpg',
+    image: '/consultation.jpg',
     details:
-      'Detailed information about Consultation. Elaborate on your process, timeline, and benefits here.',
+      'Our consultation lays the groundwork for a successful project by identifying your design goals, budget, and style preferences.',
+    explanation:
+      'Our Consultation service is the crucial first step in your design journey. We begin with a one-on-one discussion to understand your lifestyle, aspirations, and the unique characteristics of your space. Through in-depth conversations and on-site evaluations, we craft a personalized design roadmap that outlines the possibilities and sets clear expectations for timelines and budgets.',
   },
   {
     id: 'space-planning',
     title: 'Space Planning',
     description: 'Strategic planning to optimize your space’s functionality and aesthetic appeal.',
-    image: '/service-space-planning.jpg',
+    image: '/space.jpg',
     details:
-      'Detailed information about Space Planning. Provide more background, approach, and examples here.',
+      'We evaluate the layout and flow of your space, ensuring that every square foot is used to its maximum potential.',
+    explanation:
+      'Our Space Planning service is dedicated to transforming your space into a harmonious blend of function and beauty. We analyze the existing layout, paying close attention to natural light, traffic flow, and areas of underutilization. By rethinking spatial arrangements and incorporating innovative design solutions, we create a plan that enhances usability while elevating the overall aesthetic.',
   },
   {
     id: 'bespoke-design',
     title: 'Bespoke Design',
     description: 'Custom design solutions crafted to reflect your personal style and lifestyle.',
-    image: '/service-bespoke-design.jpg',
+    image: '/bespoke.jpg',
     details:
-      'Detailed information about Bespoke Design. Discuss your unique approach, custom materials, etc.',
+      'Every element is curated to your specifications, resulting in a space that is uniquely yours.',
+    explanation:
+      'Our Bespoke Design service offers a fully customized design experience where every detail is carefully curated to mirror your personality and lifestyle. We collaborate closely with you to select custom materials, color palettes, furniture, and finishes that align with your vision. From initial sketches to final installation, our team ensures that every aspect of your space is executed with precision and creativity.',
   },
 ];
 
@@ -111,16 +117,25 @@ const ServicePopup: NextPage = () => {
       <main>
         <div className="popup-container" ref={popupRef}>
           <h1>{service.title}</h1>
-          <img src={service.image} alt={service.title} />
-          <p>{service.details}</p>
-          <Link legacyBehavior href="/contact">
-            <a>
-              <button className="contact-button">Contact Us</button>
-            </a>
-          </Link>
-          <button className="close-button" onClick={() => router.push('/services')}>
-            Close
-          </button>
+          <div className="content-wrapper">
+            <div className="image-column">
+              <img src={service.image} alt={service.title} />
+            </div>
+            <div className="text-column">
+              <p className="explanation">{service.explanation}</p>
+              <p className="details">{service.details}</p>
+            </div>
+          </div>
+          <div className="button-row">
+            <Link legacyBehavior href="/contact">
+              <a>
+                <button className="contact-button">Contact Us</button>
+              </a>
+            </Link>
+            <button className="close-button" onClick={() => router.push('/services')}>
+              Close
+            </button>
+          </div>
         </div>
       </main>
       <Footer />
@@ -142,40 +157,63 @@ const ServicePopup: NextPage = () => {
           flex: 1;
         }
         .popup-container {
-          max-width: 550px;
+          max-width: 800px;
           background: #2b2b2b;
           padding: 2rem 1.5rem;
           border-radius: 8px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-          text-align: center;
+          text-align: left;
           transform-origin: center;
         }
         .popup-container h1 {
-          font-size: 1.8rem;
-          margin-bottom: 1rem;
+          font-size: 2rem;
+          margin-bottom: 1.5rem;
+          text-align: center;
           color: #f0f0f0;
         }
-        .popup-container img {
+        .content-wrapper {
+          display: flex;
+          gap: 2rem;
+          margin-bottom: 1.5rem;
+        }
+        .image-column {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .image-column img {
           width: 100%;
           max-width: 350px;
           height: auto;
           object-fit: cover;
-          margin: 1rem auto;
           border-radius: 4px;
           box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
         }
-        .popup-container p {
+        .text-column {
+          flex: 2;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .explanation,
+        .details {
           font-size: 1rem;
           color: #ccc;
-          margin-bottom: 1.5rem;
           line-height: 1.5;
+          margin-bottom: 1rem;
+        }
+        .button-row {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin-top: 1rem;
         }
         .contact-button {
           background: #f0f0f0;
           color: #1c1c1c;
           border: none;
           padding: 0.75rem 1.5rem;
-          margin: 0.5rem;
           border-radius: 4px;
           cursor: pointer;
           transition: background 0.3s ease, transform 0.3s ease;
@@ -190,7 +228,6 @@ const ServicePopup: NextPage = () => {
           border: 1px solid #ccc;
           color: #ccc;
           padding: 0.75rem 1.5rem;
-          margin: 0.5rem;
           border-radius: 4px;
           cursor: pointer;
           transition: background 0.3s ease, transform 0.3s ease;
@@ -201,9 +238,12 @@ const ServicePopup: NextPage = () => {
           transform: scale(1.05);
         }
         @media (max-width: 768px) {
-          .popup-container {
-            width: 90%;
-            padding: 1.5rem;
+          .content-wrapper {
+            flex-direction: column;
+            align-items: center;
+          }
+          .text-column {
+            text-align: center;
           }
         }
       `}</style>

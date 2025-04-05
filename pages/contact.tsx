@@ -1,4 +1,3 @@
-// pages/contact.tsx
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import Header from '../components/Header';
@@ -111,6 +110,7 @@ function ContactForm() {
         .form-cell {
           display: table-cell;
           width: 100%;
+          padding-right: 0.5rem;
         }
         label {
           display: block;
@@ -159,6 +159,18 @@ function ContactForm() {
           text-align: center;
           margin-top: 1rem;
         }
+        @media (max-width: 600px) {
+          .form-cell {
+            display: block;
+            padding-right: 0;
+          }
+          input,
+          select,
+          textarea {
+            padding: 0.8rem;
+            font-size: 0.95rem;
+          }
+        }
       `}</style>
     </form>
   );
@@ -201,22 +213,22 @@ const FAQ: React.FC = () => {
         .faqs {
           max-width: 100%;
           margin: 2rem 0;
-          padding: 1.5rem 2rem;
+          padding: 1rem 1.5rem;
           background: #141414;
           border-radius: 12px;
           text-align: center;
         }
         .faqs h2 {
           font-size: 1.8rem;
-          margin-bottom: 2rem;
+          margin-bottom: 1.5rem;
           color: #f0f0f0;
         }
         .faq-card {
-          background: rgba(43, 43, 43, 0.8);
-          border-radius: 30px;
+          background: rgba(43, 43, 43, 0.85);
+          border-radius: 20px;
           border: 1px solid rgba(0, 0, 0, 0.3);
-          padding: 1.5rem 2rem;
-          margin-bottom: 1.5rem;
+          padding: 1rem 1.5rem;
+          margin-bottom: 1rem;
           transition: background 0.3s ease;
           cursor: pointer;
           text-align: left;
@@ -225,15 +237,30 @@ const FAQ: React.FC = () => {
           background: rgba(43, 43, 43, 1);
         }
         .faq-card h3 {
-          margin: 0 0 0.8rem;
-          font-size: 1.2rem;
+          margin: 0 0 0.5rem;
+          font-size: 1.1rem;
           color: #f0f0f0;
         }
         .faq-card p {
           margin: 0;
-          font-size: 1rem;
+          font-size: 0.95rem;
           color: #ccc;
-          line-height: 1.5;
+          line-height: 1.4;
+        }
+        @media (max-width: 600px) {
+          .faqs {
+            padding: 0.8rem 1rem;
+          }
+          .faq-card {
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.8rem;
+          }
+          .faq-card h3 {
+            font-size: 1rem;
+          }
+          .faq-card p {
+            font-size: 0.9rem;
+          }
         }
       `}</style>
     </div>
@@ -262,10 +289,7 @@ const Contact: NextPage = () => {
               <p>
                 <strong>Address:</strong> Design Ghar, Jubilee Hills, Hyderabad, India
               </p>
-              <p>
-                <strong>Call us:</strong> +91 12345 67890
-              </p>
-            </div>
+                          </div>
           </div>
           {/* Right Column: Contact Form */}
           <div className="right-column card">

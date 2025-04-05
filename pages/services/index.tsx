@@ -11,21 +11,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Services: NextPage = () => {
   useEffect(() => {
-    // Animate each service card on scroll
-    const serviceCards = gsap.utils.toArray('.service-card') as HTMLElement[];
-    serviceCards.forEach((card) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        ease: 'power2.out',
+    const mm = gsap.matchMedia();
+    // Animations for larger screens
+    mm.add("(min-width: 768px)", () => {
+      const serviceCards = gsap.utils.toArray('.service-card') as HTMLElement[];
+      serviceCards.forEach((card) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          ease: 'power2.out',
+        });
       });
     });
+    // Disable animations on mobile
+    mm.add("(max-width: 767px)", () => {
+      const serviceCards = gsap.utils.toArray('.service-card') as HTMLElement[];
+      gsap.set(serviceCards, { opacity: 1, y: 0 });
+    });
+    return () => mm.revert();
   }, []);
 
   return (
@@ -38,11 +47,7 @@ const Services: NextPage = () => {
         </p>
         <div className="services-grid">
           {services.map((service) => (
-            <Link
-              href={`/services/${service.id}`}
-              key={service.id}
-              legacyBehavior
-            >
+            <Link href={`/services/${service.id}`} key={service.id} legacyBehavior>
               <a className="service-card">
                 <div className="service-image">
                   <img src={service.image} alt={service.title} />
@@ -69,7 +74,7 @@ const Services: NextPage = () => {
           margin: 1.5rem auto;
           padding: 0 1rem;
           text-align: center;
-          margin-bottom: 4rem; /* Increased bottom margin to separate content from Footer */
+          margin-bottom: 4rem; /* Ensure sufficient separation from the Footer */
         }
         h1 {
           font-size: 2rem;
